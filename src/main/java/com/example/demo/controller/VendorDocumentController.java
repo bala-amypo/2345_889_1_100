@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vendor-documents")
+@RequestMapping("/api/vendor-documents")
 public class VendorDocumentController {
 
     private final VendorDocumentService vendorDocumentService;
@@ -16,29 +16,20 @@ public class VendorDocumentController {
         this.vendorDocumentService = vendorDocumentService;
     }
 
-    @PostMapping
-    public VendorDocument create(@RequestBody VendorDocument document) {
-        return vendorDocumentService.create(document);
+    @PostMapping("/{vendorId}/{typeId}")
+    public VendorDocument upload(@PathVariable Long vendorId,
+                                 @PathVariable Long typeId,
+                                 @RequestBody VendorDocument document) {
+        return vendorDocumentService.uploadDocument(vendorId, typeId, document);
+    }
+
+    @GetMapping("/vendor/{vendorId}")
+    public List<VendorDocument> getForVendor(@PathVariable Long vendorId) {
+        return vendorDocumentService.getDocumentsForVendor(vendorId);
     }
 
     @GetMapping("/{id}")
     public VendorDocument get(@PathVariable Long id) {
-        return vendorDocumentService.getById(id);
-    }
-
-    @GetMapping
-    public List<VendorDocument> getAll() {
-        return vendorDocumentService.getAll();
-    }
-
-    @PutMapping("/{id}")
-    public VendorDocument update(@PathVariable Long id,
-                                 @RequestBody VendorDocument document) {
-        return vendorDocumentService.update(id, document);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        vendorDocumentService.delete(id);
+        return vendorDocumentService.getDocument(id);
     }
 }
