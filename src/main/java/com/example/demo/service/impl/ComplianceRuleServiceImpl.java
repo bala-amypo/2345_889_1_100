@@ -13,29 +13,23 @@ public class ComplianceRuleServiceImpl implements ComplianceRuleService {
 
     private final ComplianceRuleRepository complianceRuleRepository;
 
-    public ComplianceRuleServiceImpl(
-            ComplianceRuleRepository complianceRuleRepository) {
+    public ComplianceRuleServiceImpl(ComplianceRuleRepository complianceRuleRepository) {
         this.complianceRuleRepository = complianceRuleRepository;
     }
 
     @Override
-    public ComplianceRule create(ComplianceRule rule) {
+    public ComplianceRule createRule(ComplianceRule rule) {
         return complianceRuleRepository.save(rule);
     }
 
     @Override
-    public ComplianceRule getById(Long id) {
-        return complianceRuleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
-    }
-
-    @Override
-    public List<ComplianceRule> getAll() {
+    public List<ComplianceRule> getAllRules() {
         return complianceRuleRepository.findAll();
     }
 
     @Override
-    public void delete(Long id) {
-        complianceRuleRepository.delete(getById(id));
+    public ComplianceRule getRule(Long id) {
+        return complianceRuleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
     }
 }
