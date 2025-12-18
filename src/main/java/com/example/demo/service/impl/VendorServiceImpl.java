@@ -19,7 +19,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Vendor create(Vendor vendor) {
+    public Vendor createVendor(Vendor vendor) {
         if (vendorRepository.existsByVendorName(vendor.getVendorName())) {
             throw new ValidationException("Vendor name already exists");
         }
@@ -27,28 +27,13 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Vendor getById(Long id) {
+    public Vendor getVendor(Long id) {
         return vendorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vendor not found"));
     }
 
     @Override
-    public List<Vendor> getAll() {
+    public List<Vendor> getAllVendors() {
         return vendorRepository.findAll();
-    }
-
-    @Override
-    public Vendor update(Long id, Vendor vendor) {
-        Vendor existing = getById(id);
-        existing.setVendorName(vendor.getVendorName());
-        existing.setEmail(vendor.getEmail());
-        existing.setPhone(vendor.getPhone());
-        existing.setIndustry(vendor.getIndustry());
-        return vendorRepository.save(existing);
-    }
-
-    @Override
-    public void delete(Long id) {
-        vendorRepository.delete(getById(id));
     }
 }
