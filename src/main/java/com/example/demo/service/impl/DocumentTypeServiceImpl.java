@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.exception.ValidationException;
 import com.example.demo.model.DocumentType;
 import com.example.demo.repository.DocumentTypeRepository;
@@ -18,7 +19,7 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     }
 
     @Override
-    public DocumentType create(DocumentType type) {
+    public DocumentType createDocumentType(DocumentType type) {
         if (documentTypeRepository.existsByTypeName(type.getTypeName())) {
             throw new ValidationException("Document Type already exists");
         }
@@ -26,12 +27,13 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     }
 
     @Override
-    public List<DocumentType> getAll() {
+    public List<DocumentType> getAllDocumentTypes() {
         return documentTypeRepository.findAll();
     }
 
     @Override
-    public void delete(Long id) {
-        documentTypeRepository.deleteById(id);
+    public DocumentType getDocumentType(Long id) {
+        return documentTypeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Document Type not found"));
     }
 }
