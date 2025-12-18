@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface ComplianceScoreRepository extends JpaRepository<ComplianceScore, Long> {
 
-    Optional<ComplianceScore> findByVendorId(Long vendorId);
+    Optional<ComplianceScore> findByVendor_Id(Long vendorId);
 }
