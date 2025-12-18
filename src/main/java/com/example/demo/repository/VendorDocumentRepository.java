@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface VendorDocumentRepository extends JpaRepository<VendorDocument, Long> {
 
-    List<VendorDocument> findByVendorId(Long vendorId);
+    List<VendorDocument> findByVendor_Id(Long vendorId);
 }
