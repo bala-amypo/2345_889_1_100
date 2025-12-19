@@ -40,9 +40,13 @@ public class VendorDocumentServiceImpl implements VendorDocumentService {
         DocumentType type = documentTypeRepository.findById(typeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Document Type not found"));
 
+        if (document.getFileUrl() == null || document.getFileUrl().isBlank()) {
+            throw new ValidationException("File URL is required");
+        }
+
         if (document.getExpiryDate() != null &&
-            document.getExpiryDate().isBefore(LocalDate.now())) {
-            throw new ValidationException("Document has expired");
+                document.getExpiryDate().isBefore(LocalDate.now())) {
+            throw new ValidationException("Expiry date cannot be in the past");
         }
 
         document.setVendor(vendor);
@@ -54,7 +58,7 @@ public class VendorDocumentServiceImpl implements VendorDocumentService {
 
     @Override
     public List<VendorDocument> getDocumentsForVendor(Long vendorId) {
-        return vendorDocumentRepository.findByVendor_Id(vendorId);
+        return vendorDocumentRepository.findByVendorId(vendorId);
     }
 
     @Override
