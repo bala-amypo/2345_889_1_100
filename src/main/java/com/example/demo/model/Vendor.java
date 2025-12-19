@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "vendors")
@@ -20,38 +22,47 @@ public class Vendor {
 
     private LocalDateTime createdAt;
 
-    public Vendor() {
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "vendor_document_types",
+            joinColumns = @JoinColumn(name = "vendor_id"),
+            inverseJoinColumns = @JoinColumn(name = "document_type_id")
+    )
+    private Set<DocumentType> supportedDocumentTypes = new HashSet<>();
 
-    public Vendor(Long id, String vendorName, String email, String phone, String industry, LocalDateTime createdAt) {
-        this.id = id;
+    public Vendor() {}
+
+    public Vendor(String vendorName, String email, String phone, String industry) {
         this.vendorName = vendorName;
         this.email = email;
         this.phone = phone;
         this.industry = industry;
-        this.createdAt = createdAt;
     }
 
     @PrePersist
-    public void onCreate() {
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // getters & setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // getters and setters
 
-    public String getVendorName() { return vendorName; }
-    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getVendorName() {
+        return vendorName;
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
 
-    public String getIndustry() { return industry; }
-    public void setIndustry(String industry) { this.industry = industry; }
+    public Set<DocumentType> getSupportedDocumentTypes() {
+        return supportedDocumentTypes;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setSupportedDocumentTypes(Set<DocumentType> supportedDocumentTypes) {
+        this.supportedDocumentTypes = supportedDocumentTypes;
+    }
 }
