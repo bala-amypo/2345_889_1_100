@@ -54,4 +54,19 @@ public class ComplianceScore {
         this.scoreValue = scoreValue;
     }
 
-    public String getRating
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public LocalDateTime getLastEvaluated() {
+        return lastEvaluated;
+    }
+
+    public void setLastEvaluated(LocalDateTime lastEvaluated) {
+        this.lastEvaluated = lastEvaluated;
+    }
+}
