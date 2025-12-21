@@ -27,7 +27,8 @@ public class VendorDocument {
 
     private Boolean isValid;
 
-    public VendorDocument() {}
+    public VendorDocument() {
+    }
 
     public VendorDocument(String fileUrl, LocalDate expiryDate) {
         this.fileUrl = fileUrl;
@@ -45,10 +46,12 @@ public class VendorDocument {
         }
     }
 
-    // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Vendor getVendor() {
@@ -75,6 +78,14 @@ public class VendorDocument {
         this.fileUrl = fileUrl;
     }
 
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public void setUploadedAt(LocalDateTime uploadedAt) {
+        this.uploadedAt = uploadedAt;
+    }
+
     public LocalDate getExpiryDate() {
         return expiryDate;
     }
@@ -89,9 +100,5 @@ public class VendorDocument {
 
     public void setIsValid(Boolean isValid) {
         this.isValid = isValid;
-    }
-
-    public LocalDateTime getUploadedAt() {
-        return uploadedAt;
     }
 }

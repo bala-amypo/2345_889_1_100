@@ -20,7 +20,8 @@ public class ComplianceScore {
 
     private LocalDateTime lastEvaluated;
 
-    public ComplianceScore() {}
+    public ComplianceScore() {
+    }
 
     public ComplianceScore(Vendor vendor, Double scoreValue, String rating) {
         this.vendor = vendor;
@@ -29,10 +30,20 @@ public class ComplianceScore {
         this.lastEvaluated = LocalDateTime.now();
     }
 
-    // getters and setters
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 
     public Double getScoreValue() {
@@ -43,15 +54,4 @@ public class ComplianceScore {
         this.scoreValue = scoreValue;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public void setLastEvaluated(LocalDateTime lastEvaluated) {
-        this.lastEvaluated = lastEvaluated;
-    }
-
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
-    }
-}
+    public String getRating
