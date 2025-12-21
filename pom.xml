@@ -49,19 +49,19 @@
             <version>8.0.33</version>
         </dependency>
 
-        <!-- 🔴 ADDED: Spring Security (REQUIRED) -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- Password encoder (you already had this – kept) -->
+        <!-- Password encoder -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
-        <!-- 🔴 ADDED: JWT (REQUIRED) -->
+        <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -75,7 +75,7 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!-- 🔴 ADDED: H2 for tests (SAFE) -->
+        <!-- H2 database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
