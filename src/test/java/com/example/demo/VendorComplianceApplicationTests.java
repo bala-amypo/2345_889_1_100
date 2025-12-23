@@ -34,53 +34,45 @@ public class VendorComplianceApplicationTests {
 
     @BeforeEach
     public void setup() {
-        // Initialize a test user
         testUser = new User();
         testUser.setId(1L);
         testUser.setEmail("user@example.com");
-        testUser.setPassword("password"); // if needed
+        testUser.setPassword("password");
     }
 
     @Test
     public void testJwtTokenGenerationAndClaims() {
-        // Mock authentication
         Authentication auth = mock(Authentication.class);
         when(auth.getName()).thenReturn(testUser.getEmail());
 
-        // Generate JWT token
         String token = jwtUtil.generateToken(auth, testUser.getId(), testUser.getEmail(), "USER");
-        assertNotNull(token, "Token should not be null");
+        assertNotNull(token);
 
-        // Mock UserDetails for token validation
         UserDetails userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn(testUser.getEmail());
 
-        // Validate the token
-        assertTrue(jwtUtil.validateToken(token, userDetails), "Token should be valid");
+        assertTrue(jwtUtil.validateToken(token, userDetails));
 
-        // Extract user ID and role from token
         Long userId = jwtUtil.getUserIdFromToken(token);
         String role = jwtUtil.getRoleFromToken(token);
 
-        assertEquals(testUser.getId(), userId, "User ID from token should match");
-        assertEquals("USER", role, "Role from token should match");
+        assertEquals(testUser.getId(), userId);
+        assertEquals("USER", role);
     }
 
     @Test
     public void testUserServiceFindById() {
-        // Mock findById
         when(userService.findById(1L)).thenReturn(testUser);
 
         User user = userService.findById(1L);
-        assertNotNull(user, "User should not be null");
-        assertEquals("user@example.com", user.getEmail(), "User email should match");
+        assertNotNull(user);
+        assertEquals("user@example.com", user.getEmail());
     }
 
     @Test
     public void testVendorServiceMock() {
-        // Example mock for vendor service
         when(vendorService.getAllVendors()).thenReturn(java.util.Collections.emptyList());
 
-        assertTrue(vendorService.getAllVendors().isEmpty(), "Vendor list should be empty");
+        assertTrue(vendorService.getAllVendors().isEmpty());
     }
 }
