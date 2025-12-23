@@ -23,6 +23,12 @@
     </properties>
 
     <dependencies>
+    <!-- Spring Boot Test (JUnit 5 + Mockito + Spring Test) -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
 
         <!-- Spring Web -->
         <dependency>
