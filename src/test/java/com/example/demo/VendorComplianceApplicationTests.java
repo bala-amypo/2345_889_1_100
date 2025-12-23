@@ -75,4 +75,4 @@ public class VendorComplianceApplicationTests {
 
         assertTrue(vendorService.getAllVendors().isEmpty());
     }
-}`
+}
