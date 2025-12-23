@@ -1,0 +1,78 @@
+package com.example.demo;
+
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
+import com.example.demo.service.VendorService;
+import com.example.demo.security.JwtUtil;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+public class VendorComplianceApplicationTests {
+
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private VendorService vendorService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    private User testUser;
+
+    @BeforeEach
+    public void setup() {
+        testUser = new User();
+        testUser.setId(1L);
+        testUser.setEmail("user@example.com");
+        testUser.setPassword("password");
+    }
+
+    @Test
+    public void testJwtTokenGenerationAndClaims() {
+        Authentication auth = mock(Authentication.class);
+        when(auth.getName()).thenReturn(testUser.getEmail());
+
+        String token = jwtUtil.generateToken(auth, testUser.getId(), testUser.getEmail(), "USER");
+        assertNotNull(token);
+
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn(testUser.getEmail());
+
+        assertTrue(jwtUtil.validateToken(token, userDetails));
+
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        String role = jwtUtil.getRoleFromToken(token);
+
+        assertEquals(testUser.getId(), userId);
+        assertEquals("USER", role);
+    }
+
+    @Test
+    public void testUserServiceFindById() {
+        when(userService.findById(1L)).thenReturn(testUser);
+
+        User user = userService.findById(1L);
+        assertNotNull(user);
+        assertEquals("user@example.com", user.getEmail());
+    }
+
+    @Test
+    public void testVendorServiceMock() {
+        when(vendorService.getAllVendors()).thenReturn(java.util.Collections.emptyList());
+
+        assertTrue(vendorService.getAllVendors().isEmpty());
+    }
+}
