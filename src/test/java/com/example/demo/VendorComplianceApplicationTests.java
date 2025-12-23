@@ -1,4 +1,3 @@
-
 package com.example.demo;
 
 import com.example.demo.model.User;
@@ -18,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 public class VendorComplianceApplicationTests {
@@ -46,20 +44,27 @@ public class VendorComplianceApplicationTests {
         Authentication auth = mock(Authentication.class);
         when(auth.getName()).thenReturn(testUser.getEmail());
 
+        // Generate token
         String token = jwtUtil.generateToken(auth, testUser.getId(), testUser.getEmail(), "USER");
         assertNotNull(token);
 
         UserDetails userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn(testUser.getEmail());
 
+        // Validate token
         assertTrue(jwtUtil.validateToken(token, userDetails));
 
-        assertEquals(testUser.getId(), jwtUtil.getUserIdFromToken(token));
-        assertEquals("USER", jwtUtil.getRoleFromToken(token));
+        // Extract claims
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        String role = jwtUtil.getRoleFromToken(token);
+
+        assertEquals(testUser.getId(), userId);
+        assertEquals("USER", role);
     }
 
     @Test
     public void testUserServiceMock() {
+        // Mock findById
         when(userService.findById(1L)).thenReturn(testUser);
 
         User user = userService.findById(1L);
