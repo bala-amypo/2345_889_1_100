@@ -50,6 +50,10 @@ public class JwtUtil {
         return extractAllClaims(token).get("role", String.class);
     }
 
+    public String extractUsername(String token) {
+        return getEmailFromToken(token); // Fix for JwtAuthenticationFilter
+    }
+
     private Date getExpirationDateFromToken(String token) {
         return extractAllClaims(token).getExpiration();
     }
