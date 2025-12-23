@@ -1,3 +1,25 @@
+
+package com.example.demo;
+
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
+import com.example.demo.service.VendorService;
+import com.example.demo.security.JwtUtil;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+
 @SpringBootTest
 public class VendorComplianceApplicationTests {
 
