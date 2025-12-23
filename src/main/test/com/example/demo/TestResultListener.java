@@ -32,7 +32,7 @@ public class TestResultListener implements ITestListener {
     }
     
     @Override
-    public void onStart(ITestContext context) {
+    public void onStart(ITestContext context) { 
         // Optional: log when suite starts
     }
     
