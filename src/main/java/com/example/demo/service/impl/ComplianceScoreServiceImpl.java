@@ -10,7 +10,7 @@ import com.example.demo.repository.ComplianceScoreRepository;
 import com.example.demo.repository.DocumentTypeRepository;
 import com.example.demo.repository.VendorDocumentRepository;
 import com.example.demo.repository.VendorRepository;
-import com.example.demo.service.DocumentTypeService;
+import com.example.demo.service.ComplianceScoreService;
 import com.example.demo.util.ComplianceScoringEngine;
 import org.springframework.stereotype.Service;
 

@@ -4,6 +4,7 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.ComplianceRule;
 import com.example.demo.repository.ComplianceRuleRepository;
 import org.springframework.stereotype.Service;
+import com.example.demo.service.ComplianceRuleService;
 
 import java.util.List;
 
