@@ -24,7 +24,7 @@ public class ComplianceScoreServiceImpl implements ComplianceScoreService {
 
     private final ComplianceScoringEngine scoringEngine = new ComplianceScoringEngine();
 
-   
+    
     public ComplianceScoreServiceImpl(
             VendorRepository vendorRepository,
             DocumentTypeRepository documentTypeRepository,
@@ -58,7 +58,8 @@ public class ComplianceScoreServiceImpl implements ComplianceScoreService {
         double scoreValue =
                 scoringEngine.calculateScore(requiredTypes, submittedTypes);
 
-        String rating = scoringEngine.deriveRating(scoreValue);
+        String rating =
+                scoringEngine.deriveRating(scoreValue);
 
         ComplianceScore score =
                 complianceScoreRepository.findByVendor_Id(vendorId)
@@ -77,5 +78,11 @@ public class ComplianceScoreServiceImpl implements ComplianceScoreService {
         return complianceScoreRepository.findByVendor_Id(vendorId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Score not found"));
+    }
+
+   
+    @Override
+    public List<ComplianceScore> getAllScores() {
+        return complianceScoreRepository.findAll();
     }
 }

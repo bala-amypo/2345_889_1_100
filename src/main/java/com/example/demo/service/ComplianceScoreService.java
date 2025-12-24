@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.model.ComplianceScore;
-
 import java.util.List;
 
 public interface ComplianceScoreService {
