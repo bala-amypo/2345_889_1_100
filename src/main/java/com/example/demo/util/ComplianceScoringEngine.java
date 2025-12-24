@@ -1,30 +1,48 @@
 package com.example.demo.util;
 
+import com.example.demo.model.DocumentType;
+
+import java.util.List;
+
 public class ComplianceScoringEngine {
-    
-    public static double calculateScore(int totalRequiredDocuments, int uploadedValidDocuments, int totalWeightRequired, int uploadedValidWeight) {
-        if (totalRequiredDocuments == 0) {
+
+  
+    public double calculateScore(List<DocumentType> required,
+                                 List<DocumentType> submitted) {
+
+        // Edge case tested explicitly
+        if (required == null || required.isEmpty()) {
             return 100.0;
         }
-        
-        double documentPercentage = (double) uploadedValidDocuments / totalRequiredDocuments;
-        double weightPercentage = totalWeightRequired > 0 ? (double) uploadedValidWeight / totalWeightRequired : 0.0;
-        
-        // Average of both percentages
-        double score = ((documentPercentage + weightPercentage) / 2.0) * 100.0;
-        
-        return Math.max(0.0, Math.min(100.0, score));
+
+        int totalWeight = required.stream()
+                .mapToInt(DocumentType::getWeight)
+                .sum();
+
+        int matchedWeight = submitted.stream()
+                .filter(submittedType ->
+                        required.stream().anyMatch(
+                                req -> req.getId() != null
+                                        && req.getId().equals(submittedType.getId())
+                        ))
+                .mapToInt(DocumentType::getWeight)
+                .sum();
+
+        return (matchedWeight * 100.0) / totalWeight;
     }
-    
-    public static String deriveRating(double score) {
-        if (score >= 90) {
+
+   
+    public String deriveRating(double score) {
+
+        if (score >= 90.0) {
             return "EXCELLENT";
-        } else if (score >= 70) {
-            return "GOOD";
-        } else if (score >= 50) {
-            return "POOR";
-        } else {
-            return "NONCOMPLIANT";
         }
+        if (score >= 75.0) {
+            return "GOOD";
+        }
+        if (score >= 50.0) {
+            return "POOR";
+        }
+        return "NON_COMPLIANT";
     }
 }
