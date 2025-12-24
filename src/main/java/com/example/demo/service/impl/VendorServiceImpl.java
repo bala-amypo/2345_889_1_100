@@ -4,11 +4,11 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Vendor;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorService;
-import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Service;  
 
 import java.util.List;
 
+@Service   
 public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository vendorRepository;
