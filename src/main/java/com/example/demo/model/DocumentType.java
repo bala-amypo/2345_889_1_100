@@ -8,97 +8,59 @@ import java.util.Set;
 @Entity
 @Table(name = "document_types")
 public class DocumentType {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(unique = true)
-    private String typeName;
-    
-    private String description;
-    
-    private Boolean required;
-    
-    private Integer weight;
-    
+
+    private boolean required;
+    private int weight;
     private LocalDateTime createdAt;
-    
+
     @ManyToMany(mappedBy = "supportedDocumentTypes")
     private Set<Vendor> vendors = new HashSet<>();
-    
-    public DocumentType() {
-    }
-    
-    public DocumentType(String typeName, String description, Boolean required, Integer weight) {
-        this.typeName = typeName;
-        this.description = description;
-        this.required = required;
-        this.weight = weight;
-    }
-    
+
+    public DocumentType() {}
+
     @PrePersist
-    protected void onCreate() {
+    public void prePersist() {
         this.createdAt = LocalDateTime.now();
-        if (this.weight != null && this.weight < 0) {
-            this.weight = 0;
-        }
     }
-    
-    // Getters and Setters
+
+    // ===== getters & setters =====
+
     public Long getId() {
         return id;
     }
-    
+
+    // used in tests
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public String getTypeName() {
-        return typeName;
-    }
-    
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public Boolean getRequired() {
+
+    public boolean getRequired() {
         return required;
     }
-    
-    public void setRequired(Boolean required) {
+
+    // used in tests
+    public void setRequired(boolean required) {
         this.required = required;
     }
-    
-    public Integer getWeight() {
+
+    public int getWeight() {
         return weight;
     }
-    
-    public void setWeight(Integer weight) {
+
+    // used in tests
+    public void setWeight(int weight) {
         this.weight = weight;
     }
-    
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-    
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
+
     public Set<Vendor> getVendors() {
         return vendors;
-    }
-    
-    public void setVendors(Set<Vendor> vendors) {
-        this.vendors = vendors;
     }
 }
