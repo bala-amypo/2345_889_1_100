@@ -11,10 +11,13 @@ import com.example.demo.repository.VendorDocumentRepository;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.ComplianceScoreService;
 import com.example.demo.util.ComplianceScoringEngine;
+import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service  
 public class ComplianceScoreServiceImpl implements ComplianceScoreService {
 
     private final VendorRepository vendorRepository;

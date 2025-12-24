@@ -8,10 +8,13 @@ import com.example.demo.repository.DocumentTypeRepository;
 import com.example.demo.repository.VendorDocumentRepository;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.VendorDocumentService;
+import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service  
 public class VendorDocumentServiceImpl implements VendorDocumentService {
 
     private final VendorDocumentRepository vendorDocumentRepository;

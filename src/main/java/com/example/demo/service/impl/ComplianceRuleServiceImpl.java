@@ -7,6 +7,8 @@ import com.example.demo.service.ComplianceRuleService;
 
 import java.util.List;
 
+
+@Service  
 public class ComplianceRuleServiceImpl implements ComplianceRuleService {
 
     private final ComplianceRuleRepository repository;

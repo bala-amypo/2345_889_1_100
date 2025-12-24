@@ -4,9 +4,13 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.DocumentType;
 import com.example.demo.repository.DocumentTypeRepository;
 import com.example.demo.service.DocumentTypeService;
+import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
+
+@Service  
 public class DocumentTypeServiceImpl implements DocumentTypeService {
 
     private final DocumentTypeRepository documentTypeRepository;
