@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.DocumentType;
 import com.example.demo.repository.DocumentTypeRepository;
 import com.example.demo.service.DocumentTypeService;
@@ -15,12 +16,19 @@ public class DocumentTypeServiceImpl implements DocumentTypeService {
     }
 
     @Override
-    public DocumentType getDocumentType(Long id) {
-        return documentTypeRepository.findById(id).orElse(null);
+    public DocumentType createDocumentType(DocumentType type) {
+        return documentTypeRepository.save(type);
     }
 
     @Override
-    public List<DocumentType> getRequiredDocumentTypes() {
-        return documentTypeRepository.findByRequiredTrue();
+    public List<DocumentType> getAllDocumentTypes() {
+        return documentTypeRepository.findAll();
+    }
+
+    @Override
+    public DocumentType getDocumentType(Long id) {
+        return documentTypeRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("DocumentType not found"));
     }
 }
