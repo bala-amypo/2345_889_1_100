@@ -22,7 +22,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }
+    String path = request.getServletPath();
 
+if (path.startsWith("/auth/")
+        || path.startsWith("/swagger-ui")
+        || path.startsWith("/v3/api-docs")) {
+
+    filterChain.doFilter(request, response);
+    return;
+}
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
