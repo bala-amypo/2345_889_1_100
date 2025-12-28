@@ -39,11 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (jwtUtil.validateToken(token)) {
 
-                String email = Jwts.parser()
-                        .setSigningKey("secret")
-                        .parseClaimsJws(token)
-                        .getBody()
-                        .getSubject();
+                String email = JwtUtil(token);
+                        
 
                 var userDetails =
                         userDetailsService.loadUserByUsername(email);
