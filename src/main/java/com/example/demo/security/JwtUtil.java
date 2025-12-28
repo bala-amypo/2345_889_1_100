@@ -61,4 +61,11 @@ public class JwtUtil {
 
         return claims.get("role", String.class);
     }
+    public String getEmailFromToken(String token) {
+    return Jwts.parser()
+            .setSigningKey(secret)
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+}
 }
