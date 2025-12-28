@@ -15,10 +15,7 @@ public class JwtUtil {
         this.validityInMs = validityInMs;
     }
 
-    public String generateToken(Authentication authentication,
-                                Long userId,
-                                String email,
-                                String role) {
+    public String generateToken(Long userId, String email, String role) {
 
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("userId", userId);
@@ -37,28 +34,29 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            parseClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException ex) {
             return false;
         }
     }
 
-    public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
+    public String getEmailFromToken(String token) {
+        return parseClaims(token).getSubject();
+    }
 
-        return claims.get("userId", Long.class);
+    public Long getUserIdFromToken(String token) {
+        return parseClaims(token).get("userId", Long.class);
     }
 
     public String getRoleFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return parseClaims(token).get("role", String.class);
+    }
+
+    private Claims parseClaims(String token) {
+        return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-
-        return claims.get("role", String.class);
     }
 }
