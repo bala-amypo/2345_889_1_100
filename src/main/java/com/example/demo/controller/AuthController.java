@@ -25,11 +25,40 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // ✅ REGISTER API
+    @PostMapping("/register")
+    public AuthResponse register(@RequestBody AuthRequest request) {
+
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword()); // encode inside service
+        user.setRole("USER"); // default role
+
+        User savedUser = userService.registerUser(user);
+
+        String token = jwtUtil.generateToken(
+                null,
+                savedUser.getId(),
+                savedUser.getEmail(),
+                savedUser.getRole()
+        );
+
+        return new AuthResponse(
+                token,
+                savedUser.getId(),
+                savedUser.getEmail(),
+                savedUser.getRole()
+        );
+    }
+
+    // ✅ LOGIN API
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
 
         var authToken = new UsernamePasswordAuthenticationToken(
-                request.getEmail(), request.getPassword());
+                request.getEmail(),
+                request.getPassword()
+        );
 
         authenticationManager.authenticate(authToken);
 
