@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (jwtUtil.validateToken(token)) {
 
-                String email = JwtUtil.getEmailFromToken(token);
+                String email = jwtUtil.getEmailFromToken(token);
                         
 
                 var userDetails =
